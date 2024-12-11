@@ -7,6 +7,7 @@ import { Snackbar, Alert } from '@mui/material'; // Import Snackbar and Alert fr
 import Image from "assets/img/challan.jpg"
 
 const  token = localStorage.getItem ("token");
+const apiUrl = process.env.BACKEND || 'http://localhost:5000';
 console.log("Token:", token);
 
 // Dummy data for violation types
@@ -58,7 +59,7 @@ const WardenDashBoard = () => {
     const fetchUserDetails = async () => {
       try {
         //const token = localStorage.getItem("token"); // Assuming you're storing JWT in local storage
-        const response = await axios.get(`http://localhost:5000/api/warden/${warden_id}`, {
+        const response = await axios.get(`${apiUrl}/api/warden/${warden_id}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -123,7 +124,7 @@ const WardenDashBoard = () => {
     if (currentStep === 1) {
       try {
         // Fetch vehicle details based on registration number
-        const response = await fetch(`http://localhost:5000/api/registration/${registrationNumber}`, {
+        const response = await fetch(`${apiUrl}/api/registration/${registrationNumber}`, {
 
           headers: {
             Authorization: `Bearer ${token}`
@@ -139,7 +140,7 @@ const WardenDashBoard = () => {
         });
 
         // Fetch owner details based on owner CNIC
-        const ownerResponse = await fetch(`http://localhost:5000/api/citizen/cnic/${vehicleData.owner_cnic}`,{
+        const ownerResponse = await fetch(`${apiUrl}/api/citizen/cnic/${vehicleData.owner_cnic}`,{
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -176,7 +177,7 @@ const WardenDashBoard = () => {
       formData.append('file', selectedPhoto); // Changed 'photo' to 'file'
   
       try {
-        const response = await fetch('http://127.0.0.1:5000/upload', {
+        const response = await fetch('${apiUrl}/upload', {
           method: 'POST',
           body: formData,
         });
